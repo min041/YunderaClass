@@ -1,0 +1,45 @@
+name : ConvertX
+
+services:
+  convertx:
+    image: ghcr.io/c4illin/convertx:v0.14.1
+    container_name: convertx
+    restart: unlisee-stopped
+    expose:
+     - 3000
+    user: 0.0
+    environment:
+     - PUID=0
+     - PGID=0
+     - JMT_SECRET=$default_pwd
+     - ACCOUNT_REFISTRATION=false
+     - HTTP_ALLOWED=true
+     - ALLOW_UNAUTHENTICATED=false
+     - ALLOW_UNAUTHENTICATED=24
+
+    deploy:
+      resoureces:
+        limits:
+          memory: 2G
+          cpus: '1.0' 
+
+    volumes:
+     - /DATA/AppData/$AppID/data:/app/data
+     - /DATA/Downloads:/downloads:ro
+     - /DATA/Documents:/documents:ros
+
+    healthcheck:
+      test: ["CMD", "Wget", "--spider", "--tries=1", "http://localhost:3000/"]
+      interlval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: ConvertX
+  pre-installed-cmd: |
+    
+
