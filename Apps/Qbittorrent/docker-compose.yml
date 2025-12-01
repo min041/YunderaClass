@@ -3,7 +3,7 @@ name: qbittorrent
 services:
   qbittorrent:
    
-    user: $PUID:$PGID
+    user: 0:0
     
     
     image: lscr.io/linuxserver/qbittorrent:5.1.2
